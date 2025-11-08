@@ -3,84 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio of Ahmmad Abdali Khan - Cybersecurity Specialist and Computer Science Student.">
+    <meta name="description" content="Ahmmad Abdali Khan - Cybersecurity Specialist & CS Student at UITS.">
     <title>Ahmmad Abdali Khan | Cybersecurity</title>
-    
-    <!-- Link to your custom CSS file -->
     <link rel="stylesheet" href="style.css">
-    
-    <!-- Optional: Preconnect to Google Fonts for faster loading -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Using 'Inter' for clean text and 'Fira Code' for a tech/coding vibe -->
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.14/dist/lenis.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Navigation Bar -->
-    <header class="fixed-nav">
-        <nav class="nav-container">
-            <a href="#hero" class="logo">AAK<span class="dot">.</span></a>
-            <ul class="nav-links">
-                <li><a href="#about" class="nav-link"><span class="nav-num"></span> About</a></li>
-                <li><a href="#skills" class="nav-link"><span class="nav-num"></span> Skills</a></li>
-                <li><a href="#projects" class="nav-link"><span class="nav-num"></span> Projects</a></li>
-                <li><a href="#contact" class="nav-link"><span class="nav-num"></span> Contact</a></li>
-            </ul>
-            <div class="hamburger">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
-        </nav>
-    </header>
+    <nav class="sidebar-nav">
+        <a href="#hero" class="nav-icon active" aria-label="Home">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </a>
+        <a href="#about" class="nav-icon" aria-label="About">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </a>
+        <a href="#skills" class="nav-icon" aria-label="Arsenal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>
+        </a>
+        <a href="#projects" class="nav-icon" aria-label="Projects">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </a>
+        <a href="#contact" class="nav-icon" aria-label="Contact">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </a>
+    </nav>
 
     <main>
-        <!-- Hero Section -->
         <section id="hero" class="hero-section">
-            <div class="content-wrapper">
+            <div class="content-wrapper hero-content">
                 <p class="hero-intro animate-hero">Hi, my name is</p>
                 <h1 class="hero-name animate-hero">Ahmmad Abdali Khan.</h1>
                 <h2 class="hero-tagline animate-hero">I secure systems and build digital fortresses.</h2>
                 <p class="hero-description animate-hero">
-                    I'm a 3rd-year Computer Science & Engineering student at UITS specializing in <span>Cybersecurity</span> and <span>Ethical Hacking</span>. I leverage Python to build security tools and test system vulnerabilities.
+                    A 3rd-year CS & Engineering student specializing in <span class="highlight">Cybersecurity</span> and Python automation.
                 </p>
                 <div class="hero-cta animate-hero">
                     <a href="#projects" class="btn btn-primary">View My Work</a>
-                    <a href="https://www.linkedin.com/in/ahktek/" target="_blank" class="btn btn-outline">LinkedIn</a>
                 </div>
             </div>
         </section>
 
-        <!-- About Section -->
         <section id="about" class="section-pad">
             <div class="content-wrapper">
                 <h2 class="section-heading gsap-reveal"><span class="heading-num">01.</span> About Me</h2>
                 <div class="about-grid">
                     <div class="about-text gsap-reveal">
-                        <p>
-                            Hello! I'm Ahmmad, a focused and strategic problem-solver from Dhaka, Bangladesh. currently pursuing my CSE degree at UITS (graduating 2028).
-                        </p>
-                        <p>
-                            My journey into tech started with a curiosity about how systems break. Today, I channel that into <span class="highlight">Ethical Hacking</span>—finding the cracks before the bad guys do. I value discipline, long-term growth, and quiet strength in my approach to complex challenges.
-                        </p>
-                        <p>
-                            I am actively preparing for my Master's in Australia while building real-world security tools in <strong>Parrot OS</strong> and <strong>Kali Linux</strong>.
-                        </p>
+                        <p>Hello! I'm Ahmmad, a strategic problem-solver from Dhaka, Bangladesh, currently pursuing my CSE degree at UITS.</p>
+                        <p>My journey into tech started with a curiosity about how systems break. Today, I channel that into <span class="highlight">Ethical Hacking</span>—finding the cracks before the bad guys do. I value stoic discipline and long-term growth.</p>
+                        <p>I am actively preparing for my Master's in Australia while building security tools in <strong>Parrot OS</strong> and <strong>Kali Linux</strong>.</p>
                     </div>
-                    <!-- Decorative tech square instead of standard image for now -->
                     <div class="about-visual gsap-reveal">
-                        <div class="tech-square">
+                        <div class="tech-terminal">
                             <div class="terminal-header">
-                                <span class="terminal-dot red"></span>
-                                <span class="terminal-dot yellow"></span>
-                                <span class="terminal-dot green"></span>
+                                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
                             </div>
-                            <div class="terminal-window">
-                                <p><span class="prompt">ahmmad@parrot-os:~$</span> whoami</p>
+                            <div class="terminal-body">
+                                <p><span class="prompt">ahmmad@parrot:~$</span> whoami</p>
                                 <p class="output">> Cybersecurity Enthusiast</p>
-                                <p class="output">> Future Master's Student</p>
-                                <p><span class="prompt">ahmmad@parrot-os:~$</span> _</p>
+                                <p><span class="prompt">ahmmad@parrot:~$</span> _</p>
                             </div>
                         </div>
                     </div>
@@ -88,35 +69,31 @@
             </div>
         </section>
 
-        <!-- Skills Section -->
         <section id="skills" class="section-pad">
             <div class="content-wrapper">
                 <h2 class="section-heading gsap-reveal"><span class="heading-num">02.</span> Technical Arsenal</h2>
                 <div class="skills-grid gsap-reveal">
-                    <!-- Skill Category 1 -->
                     <div class="skill-card">
-                        <h3><i class="skill-icon">🛡️</i> Security</h3>
-                        <ul>
+                        <h3 class="skill-title"><i class="ico">🛡️</i> Security</h3>
+                        <ul class="skill-list">
                             <li>Penetration Testing</li>
                             <li>Vulnerability Assessment</li>
                             <li>Parrot Security OS / Kali</li>
                             <li>Network Analysis (Wireshark)</li>
                         </ul>
                     </div>
-                    <!-- Skill Category 2 -->
                     <div class="skill-card">
-                        <h3><i class="skill-icon">💻</i> Languages</h3>
-                        <ul>
-                            <li>Python (Scripting/Automation)</li>
+                        <h3 class="skill-title"><i class="ico">💻</i> Languages</h3>
+                        <ul class="skill-list">
+                            <li>Python (Scripting)</li>
                             <li>C / C++</li>
                             <li>Java</li>
-                            <li>HTML / CSS / JavaScript</li>
+                            <li>HTML / CSS / JS</li>
                         </ul>
                     </div>
-                    <!-- Skill Category 3 -->
                     <div class="skill-card">
-                        <h3><i class="skill-icon">🔧</i> Tools & Dev</h3>
-                        <ul>
+                        <h3 class="skill-title"><i class="ico">🔧</i> Tools & Dev</h3>
+                        <ul class="skill-list">
                             <li>Git & GitHub</li>
                             <li>VS Code / PyCharm</li>
                             <li>VMware Workstation</li>
@@ -127,85 +104,68 @@
             </div>
         </section>
 
-        <!-- Projects Section -->
         <section id="projects" class="section-pad">
             <div class="content-wrapper">
                 <h2 class="section-heading gsap-reveal"><span class="heading-num">03.</span> Featured Projects</h2>
                 <div class="project-list">
-                    <!-- Project 1 -->
-                    <div class="project-item gsap-reveal">
-                        <div class="project-content">
-                            <p class="project-overline">Python Script</p>
+                    <div class="project-card gsap-reveal">
+                        <div class="project-top">
+                            <span class="project-type highlight">Python Script</span>
                             <h3 class="project-title">Multi-Threaded Port Scanner</h3>
-                            <div class="project-description">
-                                <p>A high-speed network scanning tool built with Python's socket and threading libraries. It identifies open ports on target systems 10x faster than standard sequential scanners.</p>
-                            </div>
-                            <ul class="project-tech-list">
-                                <li>Python</li>
-                                <li>Socket API</li>
-                                <li>Threading</li>
-                            </ul>
-                            <div class="project-links">
-                                <a href="https://github.com/YOUR_USERNAME/REPO" target="_blank" aria-label="GitHub Link">GitHub ↗</a>
-                            </div>
+                        </div>
+                        <div class="project-description-box">
+                            <p>A high-speed network scanning tool built with Python's socket and threading libraries. It identifies open ports on target systems 10x faster than standard sequential scanners.</p>
+                        </div>
+                        <ul class="project-tech">
+                            <li>Python</li>
+                            <li>Socket API</li>
+                            <li>Threading</li>
+                        </ul>
+                        <div class="project-links">
+                            <a href="https://github.com/yourusername/repo" target="_blank" class="icon-link"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg> GitHub</a>
                         </div>
                     </div>
-                    <!-- Project 2 -->
-                    <div class="project-item gsap-reveal">
-                        <div class="project-content">
-                            <p class="project-overline">Web Security</p>
+                    <div class="project-card gsap-reveal">
+                        <div class="project-top">
+                            <span class="project-type highlight">Web Security</span>
                             <h3 class="project-title">Vulnerability Scanner Prototype</h3>
-                            <div class="project-description">
-                                <p>An automated script that checks web applications for common misconfigurations and basic vulnerabilities like directory traversal and outdated headers.</p>
-                            </div>
-                            <ul class="project-tech-list">
-                                <li>Python</li>
-                                <li>Requests</li>
-                                <li>BeautifulSoup</li>
-                            </ul>
-                            <div class="project-links">
-                                <a href="https://github.com/YOUR_USERNAME/REPO" target="_blank" aria-label="GitHub Link">GitHub ↗</a>
-                            </div>
+                        </div>
+                        <div class="project-description-box">
+                            <p>Automated script using `requests` and `BeautifulSoup` to check web apps for common misconfigurations, directory traversal, and outdated headers.</p>
+                        </div>
+                        <ul class="project-tech">
+                            <li>Python</li>
+                            <li>Requests</li>
+                            <li>WebSec</li>
+                        </ul>
+                        <div class="project-links">
+                            <a href="https://github.com/yourusername/repo" target="_blank" class="icon-link"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg> GitHub</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Contact Section -->
+        <!-- CONTACT SECTION (RESTRUCTURED FOR MASSIVE TEXT) -->
         <section id="contact" class="section-pad text-center">
              <div class="content-wrapper slim">
-                <p class="hero-intro gsap-reveal">04. What's Next?</p>
-                <h2 class="hero-name contact-title gsap-reveal">Get In Touch</h2>
-                <p class="hero-description contact-desc gsap-reveal">
-                    I am actively looking for internships and opportunities in cybersecurity. Whether you have a question or just want to say hi, my inbox is open.
+                <p class="contact-overline gsap-reveal">04. What's Next?</p>
+                <h2 class="contact-title big-title gsap-reveal">Get In Touch</h2>
+                <p class="contact-desc gsap-reveal">
+                    Seeking internships in cybersecurity. My inbox is always open.
                 </p>
                 <a href="mailto:your.email@example.com" class="btn btn-primary big-btn gsap-reveal">Say Hello</a>
+                 <div class="social-row gsap-reveal">
+                     <a href="https://linkedin.com/in/ahktek/" target="_blank">LinkedIn</a>
+                     <a href="https://github.com/" target="_blank">GitHub</a>
+                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-             <div class="social-links">
-                <a href="https://github.com/" target="_blank" aria-label="GitHub">GitHub</a>
-                <a href="https://linkedin.com/in/ahmmad-abdali-khan" target="_blank" aria-label="LinkedIn">LinkedIn</a>
-            </div>
-            <p>Designed & Built by Ahmmad Abdali Khan</p>
-        </div>
-    </footer>
-
-    <!-- GSAP Animation Libraries (CDN) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    
-    <!-- Your Custom Javascript File -->
+    <script src="https://unpkg.com/lenis@1.3.14/dist/lenis.min.js"></script>
     <script src="script.js"></script>
 </body>
-<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 </html>
-```html
-
-### 2. style.css
-This file handles the "Cyber Stoic" dark theme.

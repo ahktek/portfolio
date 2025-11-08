@@ -1,58 +1,67 @@
-// Wait for the DOM to be fully loaded
 document.addEventListener("DOMContentLoaded", () => {
-    
-        // Initialize a new Lenis instance for smooth scrolling
-    const lenis = new Lenis();
 
-    // Synchronize Lenis scrolling with GSAP's ScrollTrigger plugin
-    lenis.on('scroll', ScrollTrigger.update);
-
-    // Add Lenis's requestAnimationFrame (raf) method to GSAP's ticker
-    // This ensures Lenis's smooth scroll animation updates on each GSAP tick
-    gsap.ticker.add((time) => {
-    lenis.raf(time * 1000); // Convert time from seconds to milliseconds
-    });
-    
-    // Disable lag smoothing in GSAP to prevent any delay in scroll animations
-    gsap.ticker.lagSmoothing(0);
-
-
-    // --- GSAP ANIMATION SETUP ---
-    // Register the ScrollTrigger plugin
+    // --- 1. SETUP (Lenis + ScrollTrigger) ---
     gsap.registerPlugin(ScrollTrigger);
 
-    // 1. HERO SECTION ANIMATION (Load immediately)
-    // Stagger the fade-in of hero elements
-    gsap.from(".animate-hero", {
-        duration: 0.8,
-        opacity: 0,
-        y: 30,          // Move up by 30px while fading in
-        stagger: 0.2,   // 0.2s delay between each element starting its animation
-        ease: "power3.out",
-        delay: 0.3      // Wait a moment after page load before starting
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
     });
 
-    // 2. SCROLL-TRIGGERED ANIMATIONS
-    // Select all elements with the class 'gsap-reveal'
-    const revealElements = document.querySelectorAll(".gsap-reveal");
+    lenis.on('scroll', ScrollTrigger.update);
 
-    revealElements.forEach((element) => {
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // --- 2. SMOOTH SCROLL ON CLICK (New Feature) ---
+    // This intercepts the click, stops the "jump", and tells Lenis to glide there.
+    document.querySelectorAll('.nav-icon').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault(); // STOP the default instant jump
+            
+            const targetId = this.getAttribute('href'); // Get "#hero", "#about", etc.
+            
+            lenis.scrollTo(targetId, { 
+                duration: 1.5, // Slightly slower than normal scroll for a luxurious feel
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) // Match your main easing
+            });
+        });
+    });
+
+    // --- 3. SCROLLSPY LOGIC (Sidebar Active State) ---
+    const sections = document.querySelectorAll("section[id]");
+    sections.forEach(section => {
+        ScrollTrigger.create({
+            trigger: section,
+            start: "top center",
+            end: "bottom center",
+            onToggle: (self) => {
+                if (self.isActive) {
+                    document.querySelectorAll(".nav-icon").forEach(icon => icon.classList.remove("active"));
+                    const activeLink = document.querySelector(`.nav-icon[href="#${section.id}"]`);
+                    if (activeLink) activeLink.classList.add("active");
+                }
+            }
+        });
+    });
+
+    // --- 4. ANIMATIONS ---
+    gsap.from(".animate-hero", {
+        duration: 1.2, opacity: 0, y: 50, stagger: 0.15, ease: "power4.out", delay: 0.2
+    });
+
+    gsap.utils.toArray(".gsap-reveal").forEach(element => {
         gsap.from(element, {
             scrollTrigger: {
-                trigger: element,      // Start animation when THIS element enters viewport
-                start: "top 85%",      // Start when top of element hits 85% down the viewport
-                toggleActions: "play none none none" // Only play once
+                trigger: element,
+                start: "top 85%",
+                toggleActions: "play none none none"
             },
-            duration: 1,
-            opacity: 0,
-            y: 50,
-            ease: "power2.out"
+            duration: 1.5, opacity: 0, y: 60, ease: "power4.out"
         });
     });
 });
-
-// Optional: Console log perfectly suited for a developer portfolio
-console.log(
-    "%c Hello, fellow developer! \n Looking for bugs? 😉",
-    "color: #64ffda; font-size: 16px; font-weight: bold; background-color: #0a192f; padding: 10px;"
-);
