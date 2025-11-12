@@ -1,24 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
-
-    // =========================================
-    // 1. CORE SETUP (Lenis Smooth Scroll + GSAP)
-    // =========================================
+    
+    // --- 1. SETUP (Lenis + ScrollTrigger) ---
     gsap.registerPlugin(ScrollTrigger);
+
     const lenis = new Lenis({
         duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true
+        smoothWheel: true,
+        smoothTouch: false,
     });
+
+    // Sync ScrollTrigger with Lenis's scroll events
     lenis.on('scroll', ScrollTrigger.update);
+
+    // Standard Native Animation Loop
     function raf(time) {
         lenis.raf(time);
         requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
 
-    // =========================================
-    // 2. MOBILE DRAWER LOGIC
-    // =========================================
+    // --- 2. MOBILE DRAWER LOGIC ---
     const menuToggle = document.querySelector('.mobile-menu-toggle');
     const mobileDrawer = document.querySelector('.mobile-drawer');
     const drawerOverlay = document.querySelector('.drawer-overlay');
@@ -28,29 +30,32 @@ document.addEventListener("DOMContentLoaded", () => {
     function openMenu() {
         mobileDrawer.classList.add('active');
         drawerOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden'; // Stop background scrolling
     }
     function closeMenu() {
         mobileDrawer.classList.remove('active');
-        drawerOverlay.classList.remove('active');
-        document.body.style.overflow = '';
+        drawerOverlay.classList.remove: 'active';
+        document.body.style.overflow = ''; // Restore scrolling
     }
+
     if (menuToggle) {
         menuToggle.addEventListener('click', openMenu);
         drawerClose.addEventListener('click', closeMenu);
         drawerOverlay.addEventListener('click', closeMenu);
+        // Close drawer when a link is clicked
         drawerLinks.forEach(link => link.addEventListener('click', closeMenu));
     }
 
-    // =========================================
-    // 3. NAVIGATION (Smooth Scroll & Spy)
-    // =========================================
+    // --- 3. NAVIGATION (Smooth Scroll & Spy) ---
     // A. Smooth Scroll on Click (Desktop & Mobile)
     document.querySelectorAll('.nav-icon, .drawer-link').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
-            lenis.scrollTo(targetId, { duration: 1.5, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+            lenis.scrollTo(targetId, { 
+                duration: 1.5, 
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
         });
     });
 
@@ -58,7 +63,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll("section[id]");
     sections.forEach(section => {
         ScrollTrigger.create({
-            trigger: section, start: "top center", end: "bottom center",
+            trigger: section, 
+            start: "top center", 
+            end: "bottom center",
             onToggle: (self) => {
                 if (self.isActive) {
                     document.querySelectorAll(".nav-icon").forEach(icon => icon.classList.remove("active"));
@@ -69,100 +76,82 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // =========================================
-    // 4. HERO ANIMATIONS (Tactical Zig-Zag)
-    // =========================================
-    
-    // A. Profile Picture (The Anchor - Pops first)
+    // --- 4. HERO ANIMATIONS (NEW) ---
+    // A. Profile Picture Pop-in
     gsap.from(".animate-pop", {
-        duration: 1.5,
-        scale: 0.8,
+        duration: 0.8,
+        scale: 0.5,
         opacity: 0,
-        ease: "elastic.out(1, 0.5)",
-        delay: 0.3
+        ease: "power2.out",
+        delay: 0.2
     });
 
-    // B. Signature (Attacks from the LEFT)
-    const signature = document.querySelector(".signature-name");
-    if (signature) {
-        // Split text into letters for that premium feel
-        signature.innerHTML = signature.textContent.split("").map(char => 
-            char === " " ? "&nbsp;" : `<span>${char}</span>`
-        ).join("");
-        
-        gsap.from(".signature-name span", {
-            duration: 1.2,
-            x: -50,         // <--- Starts 50px to the LEFT
-            opacity: 0,
-            stagger: 0.03,  // Fast ripple effect
-            ease: "power4.out",
-            delay: 0.6      // Waits for profile to land
-        });
-    }
-
-    // C. Role Part 1 (Attacks from the RIGHT)
-    gsap.from(".hero-role-1", {
-        duration: 1.2, x: 50, opacity: 0, ease: "power4.out", delay: 1.0
+    // B. Staggered fade-up for Signature, Role, and Socials
+    gsap.from(".animate-up", {
+        duration: 1,
+        y: 40,
+        opacity: 0,
+        stagger: 0.2, // Animates them one after another
+        ease: "power3.out",
+        delay: 0.5 // Start after the picture
     });
 
-    // D. Role Part 2 (Attacks from the LEFT)
-    gsap.from(".hero-role-2", {
-        duration: 1.2, x: -50, opacity: 0, ease: "power4.out", delay: 1.2
-    });
-
-    // E. Social Bar (Attacks from the RIGHT again - Zig-Zag complete)
-    gsap.from(".hero-social-bar", {
-        duration: 1.2, x: 50, opacity: 0, ease: "power4.out", delay: 1.4
-    });
-
-    // =========================================
-    // NEW: SELECTED WORK CAROUSEL (Swiper)
-    // =========================================
-    const swiper = new Swiper(".mySwiper", {
-        slidesPerView: 1,
-        spaceBetween: 30,
-        loop: true,           // Infinite loop
-        grabCursor: true,     // Shows a hand cursor to indicate draggable
-        autoplay: {
-            delay: 3000,      // 3 seconds per slide
-            disableOnInteraction: false, // Keeps auto-playing even after user swipes
-        },
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
-        speed: 800, // Smooth slide transition speed (in ms)
-    });
-
-    // =========================================
-    // 5. SCROLL REVEALS (Rest of page)
-    // =========================================
+    // --- 5. SCROLL REVEALS (Rest of page) ---
     gsap.utils.toArray(".gsap-reveal").forEach(element => {
         gsap.from(element, {
-            scrollTrigger: { trigger: element, start: "top 85%", toggleActions: "play none none none" },
-            duration: 1.5, opacity: 0, y: 60, ease: "power4.out"
+            scrollTrigger: {
+                trigger: element,
+                start: "top 85%",
+                toggleActions: "play none none none"
+            },
+            duration: 1,
+            opacity: 0,
+            y: 50,
+            ease: "power3.out"
         });
     });
 
-    // =========================================
-    // 6. MATRIX RAIN BACKGROUND
-    // =========================================
+    // --- 6. MATRIX RAIN BACKGROUND ---
     const canvas = document.getElementById('matrix-bg');
-    if (canvas) {
+    if (canvas && getComputedStyle(canvas).display !== 'none') {
         const ctx = canvas.getContext('2d');
-        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        resizeCanvas();
+        let w = canvas.width = window.innerWidth;
+        let h = canvas.height = window.innerHeight;
+        let ypos = Array(Math.ceil(w / fontSize) + 1).fill(0); // Ensure all columns are covered
+        
+        const chars = '01'; // Using binary
+        const fontSize = 14;
+
+        function resizeCanvas() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+            columns = Math.ceil(w / fontSize);
+            // Reset y-positions array on resize
+            ypos = Array(columns).fill(0);
+        }
         window.addEventListener('resize', resizeCanvas);
-        const chars = '01'; const fontSize = 14; const columns = canvas.width / fontSize;
-        const drops = []; for (let i = 0; i < columns; i++) { drops[i] = 1; }
+
         function drawMatrix() {
-            ctx.fillStyle = 'rgba(10, 25, 47, 0.1)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#64ffda'; ctx.font = `${fontSize}px 'Fira Code', monospace`;
-            for (let i = 0; i < drops.length; i++) {
+            // Use a semi-transparent fill to create the fading trail effect
+            ctx.fillStyle = 'rgba(10, 25, 47, 0.1)'; 
+            ctx.fillRect(0, 0, w, h);
+            
+            // Set color and font for the characters
+            ctx.fillStyle = '#64ffda'; // Your accent color
+            ctx.font = `${fontSize}px 'Fira Code', monospace`;
+            
+            // Loop through each column
+            for (let i = 0; i < ypos.length; i++) {
                 const text = chars.charAt(Math.floor(Math.random() * chars.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) { drops[i] = 0; }
-                drops[i]++;
+                const y = ypos[i] * fontSize;
+                ctx.fillText(text, i * fontSize, y);
+                
+                // Reset to top if it goes off-screen, with a random chance
+                if (y > h && Math.random() > 0.975) {
+                    ypos[i] = 0;
+                } else {
+                    ypos[i]++;
+                }
             }
         }
         setInterval(drawMatrix, 50);

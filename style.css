@@ -704,6 +704,13 @@ footer {
     .project-card {
         padding: 25px 20px;
     }
+    #matrix-bg {
+        display: none; /* Disables the matrix effect on mobile */
+    }
+
+    .sidebar-nav { 
+        display: none !important; /* Force hide pill sidebar */
+    }
 }
 
 /* --- Small Phones (max-width: 480px) --- */
