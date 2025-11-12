@@ -148,23 +148,48 @@ document.addEventListener("DOMContentLoaded", () => {
     // 6. MATRIX RAIN BACKGROUND
     // =========================================
     const canvas = document.getElementById('matrix-bg');
-    if (canvas) {
-        const ctx = canvas.getContext('2d');
-        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-        const chars = '01'; const fontSize = 14; const columns = canvas.width / fontSize;
-        const drops = []; for (let i = 0; i < columns; i++) { drops[i] = 1; }
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(10, 25, 47, 0.1)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#64ffda'; ctx.font = `${fontSize}px 'Fira Code', monospace`;
-            for (let i = 0; i < drops.length; i++) {
-                const text = chars.charAt(Math.floor(Math.random() * chars.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) { drops[i] = 0; }
-                drops[i]++;
-            }
-        }
-        setInterval(drawMatrix, 50);
+if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let dpr = window.devicePixelRatio || 1;
+    function resizeCanvas() {
+        // Lower resolution on mobile to improve performance
+        if (window.innerWidth < 600) dpr = 0.7; // scale down for mobile
+        else dpr = 1;
+        canvas.width = window.innerWidth * dpr;
+        canvas.height = window.innerHeight * dpr;
+        ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset any transforms
+        ctx.scale(dpr, dpr);
     }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    const chars = '01';
+    const fontSize = window.innerWidth < 600 ? 11 : 14; // use smaller font on mobile
+    let columns = Math.floor(window.innerWidth / fontSize);
+    let drops = [];
+    function initDrops() {
+        columns = Math.floor(window.innerWidth / fontSize);
+        drops = [];
+        for (let i = 0; i < columns; i++) { drops[i] = 1; }
+    }
+    initDrops();
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        initDrops();
+    });
+    function drawMatrix() {
+        ctx.fillStyle = 'rgba(10, 25, 47, 0.15)';
+        ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+        ctx.fillStyle = '#64ffda';
+        ctx.font = `${fontSize}px 'Fira Code', monospace`;
+        for (let i = 0; i < drops.length; i++) {
+            const text = chars.charAt(Math.floor(Math.random() * chars.length));
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            if (drops[i] * fontSize > canvas.height / dpr && Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        }
+        window.requestAnimationFrame(drawMatrix);
+    }
+    window.requestAnimationFrame(drawMatrix);
+}
+
 });
