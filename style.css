@@ -3,6 +3,7 @@
     ========================================= */
 /* Unified font import */
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Inter:wght@400;700&family=Fira+Code:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Orbitron:wght@400;700&family=VT323&display=swap');
 
 :root {
     --bg-main: #0a192f;

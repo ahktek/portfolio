@@ -183,7 +183,7 @@ window.addEventListener('resize', () => {
 
         // Reduce redraw rate on mobile
         let lastTime = 0;
-        let frameInterval = isMobile() ? 1000 / 25 : 1000 / 45; // FPS throttle
+        let frameInterval = isMobile() ? 1000 / 25 : 1000 / 25; // FPS throttle
 
         function resizeCanvas() {
             if (isMobile()) {
@@ -226,14 +226,38 @@ window.addEventListener('resize', () => {
             ctx.fillStyle = 'rgba(10, 25, 47, 0.19)'; // Slightly more fade for less ghosting
             ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
             ctx.fillStyle = '#64ffda';
-            ctx.font = `${fontSize}px 'Fira Code', monospace`;
+            // GLOW EFFECT (Cyberpunk Neon)
+            ctx.shadowColor = '#64ffda';
+            ctx.shadowBlur = isMobile() ? 2 : 4;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+            // Cyberpunk Matrix Font
+            const cyberFont = isMobile() 
+                ? `${fontSize - 1}px 'Rajdhani', 'Orbitron', 'VT323', monospace` 
+                : `${fontSize}px 'Rajdhani', 'Orbitron', 'VT323', monospace`;
 
-            for (let i = 0; i < drops.length; i++) {
-                const text = chars.charAt(Math.floor(Math.random() * chars.length));
+            ctx.font = cyberFont;
+
+                    for (let i = 0; i < drops.length; i++) {
+            const text = chars.charAt(Math.floor(Math.random() * chars.length));
+
+            // GLITCH EFFECT: 1% chance to flash magenta █
+            if (Math.random() > 0.99) {
+                ctx.fillStyle = '#ff00ff'; // Magenta glitch
+                ctx.fillText('█', i * fontSize, drops[i] * fontSize);
+                ctx.fillStyle = '#64ffda'; // Reset to cyan
+            } else {
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height / dpr && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
             }
+
+            // Reset drop when it goes off-screen
+            if (drops[i] * fontSize > canvas.height / dpr && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+            // After the for loop, before requestAnimationFrame
+            ctx.shadowBlur = 0;
             window.requestAnimationFrame(drawMatrix);
         }
         window.requestAnimationFrame(drawMatrix);
