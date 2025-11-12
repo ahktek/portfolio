@@ -20,9 +20,9 @@
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: auto !important;
-    overflow-x: hidden;
+html { 
+    scroll-behavior: smooth; /* Use native smooth scroll as a base */
+    overflow-x: hidden; 
 }
 
 body {
