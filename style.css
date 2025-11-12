@@ -705,7 +705,8 @@ footer {
         padding: 25px 20px;
     }
     #matrix-bg {
-        display: none; /* Disables the matrix effect on mobile */
+        /* We keep the canvas, but reduce its opacity even more on mobile */
+        opacity: 0.1;
     }
 
     .sidebar-nav { 
