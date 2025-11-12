@@ -1,8 +1,6 @@
 /* =========================================
-   GLOBAL THEME & RESET
-   ========================================= */
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
-/* Your other imports (e.g., Fira Code) should remain below this or be combined */
+    GLOBAL THEME & RESET
+    ========================================= */
 /* 2. Unify font imports (example: add Inter with Fira Code & Dancing Script) */
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Inter:wght@400;700&family=Fira+Code:wght@400;700&display=swap');
 :root {
@@ -64,8 +62,8 @@ body {
 }
 
 /* =========================================
-   BACKGROUNDS
-   ========================================= */
+    BACKGROUNDS
+    ========================================= */
 #matrix-bg {
     position: fixed;
     top: 0;
@@ -79,8 +77,8 @@ body {
 }
 
 /* =========================================
-   HERO SECTION
-   ========================================= */
+    HERO SECTION
+    ========================================= */
 /* === NEW CENTERED HERO (STEP 1) === */
 .hero-section {
     min-height: 100vh;
@@ -159,7 +157,7 @@ body {
 .hero-social-bar {
     display: flex;
     justify-content: center;
-    gap: 15px;              /* Space between circles */
+    gap: 15px;            /* Space between circles */
     margin-top: 30px;       /* Space from the text above */
 }
 
@@ -184,8 +182,8 @@ body {
 }
 
 /* =========================================
-   HEADINGS (STANDARD)
-   ========================================= */
+    HEADINGS (STANDARD)
+    ========================================= */
 .section-heading {
     display: flex;
     align-items: center;
@@ -215,8 +213,8 @@ body {
 }
 
 /* =========================================
-   NAVIGATION (DESKTOP & MOBILE)
-   ========================================= */
+    NAVIGATION (DESKTOP & MOBILE)
+    ========================================= */
 
 /* --- DESKTOP SIDEBAR --- */
 .sidebar-nav {
@@ -401,8 +399,8 @@ body {
 }
 
 /* =========================================
-   ABOUT SECTION
-   ========================================= */
+    ABOUT SECTION
+    ========================================= */
 .about-grid {
     display: grid;
     grid-template-columns: 3fr 2fr;
@@ -460,8 +458,8 @@ body {
 }
 
 /* =========================================
-   SKILLS SECTION
-   ========================================= */
+    SKILLS SECTION
+    ========================================= */
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -536,8 +534,8 @@ body {
 }
 
 /* =========================================
-   PROJECTS SECTION
-   ========================================= */
+    PROJECTS SECTION
+    ========================================= */
 .project-list {
     display: flex;
     flex-direction: column;
@@ -607,8 +605,8 @@ body {
 }
 
 /* =========================================
-   CONTACT SECTION (MASSIVE)
-   ========================================= */
+    CONTACT SECTION (MASSIVE)
+    ========================================= */
 #contact .section-heading {
     justify-content: center;
 }
@@ -666,8 +664,8 @@ footer {
 }
 
 /* =========================================
-   MOBILE TACTICS (RESPONSIVE DESIGN)
-   ========================================= */
+    MOBILE TACTICS (RESPONSIVE DESIGN)
+    ========================================= */
 
 /* --- Tablet & Smaller Laptops (max-width: 1080px) --- */
 @media (max-width: 1080px) {
@@ -677,20 +675,6 @@ footer {
     .about-grid {
         gap: 30px;
     }
-}
-
-/* =========================================
-   MOBILE TACTICS (RESPONSIVE DESIGN)
-   ========================================= */
-
-/* --- Tablet & Smaller Laptops (max-width: 1080px) --- */
-@media (max-width: 1080px) {
-  .content-wrapper {
-    padding: 0 50px;
-  }
-  .about-grid {
-    gap: 30px;
-  }
 }
 
 /* --- Standard Mobile & Tablets (max-width: 768px) --- */
@@ -777,4 +761,3 @@ footer {
     gap: 15px;
   }
 }
-
