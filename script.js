@@ -215,52 +215,109 @@ window.addEventListener('resize', () => {
             frameInterval = isMobile() ? 1000 / 25 : 1000 / 45;
         });
 
-        function drawMatrix(now) {
-            // Throttle frame rate manually for mobile
-            if (now - lastTime < frameInterval) {
-                window.requestAnimationFrame(drawMatrix);
-                return;
-            }
-            lastTime = now;
-
-            ctx.fillStyle = 'rgba(10, 25, 47, 0.19)'; // Slightly more fade for less ghosting
-            ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
-            ctx.fillStyle = '#64ffda';
-            // GLOW EFFECT (Cyberpunk Neon)
-            ctx.shadowColor = '#64ffda';
-            ctx.shadowBlur = isMobile() ? 2 : 4;
-            ctx.shadowOffsetX = 0;
-            ctx.shadowOffsetY = 0;
-            // Cyberpunk Matrix Font
-            const cyberFont = isMobile() 
-                ? `${fontSize - 1}px 'Rajdhani', 'Orbitron', 'VT323', monospace` 
-                : `${fontSize}px 'Rajdhani', 'Orbitron', 'VT323', monospace`;
-
-            ctx.font = cyberFont;
-
-                    for (let i = 0; i < drops.length; i++) {
-            const text = chars.charAt(Math.floor(Math.random() * chars.length));
-
-            // GLITCH EFFECT: 1% chance to flash magenta █
-            if (Math.random() > 0.99) {
-                ctx.fillStyle = '#ff00ff'; // Magenta glitch
-                ctx.fillText('█', i * fontSize, drops[i] * fontSize);
-                ctx.fillStyle = '#64ffda'; // Reset to cyan
-            } else {
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-            }
-
-            // Reset drop when it goes off-screen
-            if (drops[i] * fontSize > canvas.height / dpr && Math.random() > 0.975) {
-                drops[i] = 0;
-            }
-            drops[i]++;
-        }
-            // After the for loop, before requestAnimationFrame
-            ctx.shadowBlur = 0;
-            window.requestAnimationFrame(drawMatrix);
-        }
+    function drawMatrix(now) {
+    if (now - lastTime < frameInterval) {
         window.requestAnimationFrame(drawMatrix);
+        return;
+    }
+    lastTime = now;
+
+    const w = canvas.width / dpr;
+    const h = canvas.height / dpr;
+
+    // === LESS FADE = BRIGHTER BACKGROUND ===
+    ctx.fillStyle = 'rgba(10, 15, 26, 0.08)';  // WAS 0.19 → NOW 0.08
+    ctx.fillRect(0, 0, w, h);
+
+    // === BRIGHT FONT ===
+    const cyberFont = isMobile() 
+        ? `${fontSize}px var(--font-mono)` 
+        : `${fontSize + 2}px var(--font-mono)`;
+    ctx.font = cyberFont;
+
+    // === STORE POSITIONS ===
+    const positions = [];
+    const texts = [];
+    const isGlitch = [];
+
+    // === FIRST PASS: CALCULATE + STORE ===
+    for (let i = 0; i < drops.length; i++) {
+        let x = i * fontSize;
+        let y = drops[i] * fontSize;
+
+        // BARREL DISTORTION
+        const centerX = w / 2;
+        const centerY = h / 2;
+        const dx = (x - centerX) / centerX;
+        const dy = (y - centerY) / centerY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const curvature = isMobile() ? 0.35 : 0.45;
+        const factor = 1 + curvature * dist * dist;
+
+        x = centerX + dx * factor * centerX;
+        y = centerY + dy * factor * centerY;
+
+        const text = chars.charAt(Math.floor(Math.random() * chars.length));
+        const glitch = Math.random() > 0.985;  // More glitch
+
+        positions.push({ x, y });
+        texts.push(glitch ? '█' : text);
+        isGlitch.push(glitch);
+
+        if (y > h && Math.random() > 0.97) drops[i] = 0;
+        drops[i]++;
     }
 
+    // === SECOND PASS: DRAW BASE (BRIGHT) ===
+    ctx.fillStyle = '#00ff9d';  // FULL BRIGHT MINT
+    for (let i = 0; i < positions.length; i++) {
+        const { x, y } = positions[i];
+        const text = texts[i];
+        const glitch = isGlitch[i];
+
+        if (glitch) {
+            ctx.fillStyle = '#ff00ff';
+            ctx.fillText('█', x, y);
+        } else {
+            ctx.fillText(text, x, y);
+        }
+        ctx.fillStyle = '#00ff9d';
+    }
+
+    // === THIRD PASS: DOUBLE GLOW (NUCLEAR) ===
+    ctx.shadowColor = '#00ff9d';
+    ctx.shadowBlur = isMobile() ? 8 : 14;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+
+    for (let i = 0; i < positions.length; i++) {
+        const { x, y } = positions[i];
+        const text = texts[i];
+        ctx.fillText(text, x, y);
+    }
+
+    // === FOURTH PASS: EXTRA BRIGHT CORE ===
+    ctx.shadowBlur = isMobile() ? 3 : 5;
+    ctx.globalAlpha = 0.7;
+    for (let i = 0; i < positions.length; i++) {
+        const { x, y } = positions[i];
+        const text = texts[i];
+        ctx.fillText(text, x, y);
+    }
+    ctx.globalAlpha = 1;
+
+    // === RESET ===
+    ctx.shadowBlur = 0;
+
+    window.requestAnimationFrame(drawMatrix);
+}
+   
+}
+    // CRT BOOT GLITCH
+    setTimeout(() => {
+        document.body.style.filter = 'invert(1) hue-rotate(180deg)';
+        setTimeout(() => document.body.style.filter = '', 100);
+    }, 500);
+          // START MATRIX RAIN
+    window.requestAnimationFrame(drawMatrix);  
 });

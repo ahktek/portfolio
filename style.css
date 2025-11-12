@@ -6,16 +6,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Orbitron:wght@400;700&family=VT323&display=swap');
 
 :root {
-    --bg-main: #0a192f;
-    --bg-card: #112240;
-    --bg-card-inner: #172a45;
-    --text-primary: #ccd6f6;
-    --text-secondary: #8892b0;
-    --accent: #64ffda;
-    --font-mono: 'Fira Code', monospace;
-    --font-sans: 'Inter', sans-serif;
-}
+    /* === CORE BACKGROUND === */
+    --bg-main: #0a0f1a;           /* Deeper void — almost black */
+    --bg-card: #0f1a2e;           /* CRT monitor plastic */
+    --bg-card-inner: #142038;     /* Inner shadow depth */
 
+    /* === TEXT & UI === */
+    --text-primary: #a8e6cf;      /* Soft phosphor white (not pure) */
+    --text-secondary: #6b9b8a;     /* Muted green-gray */
+    --text-muted: #4a6b5f;        /* Deep shadow text */
+
+    /* === NEON ACCENT (CRT GLOW) === */
+    --accent: #00ff9d;             /* Electric mint — BRIGHTER, more saturated */
+    --accent-dark: #00b36b;        /* For hover states */
+    --accent-glow: #00ff9d;        /* Same as accent, for glow */
+
+    /* === GLITCH COLORS === */
+    --glitch-magenta: #ff00ff;    /* Magenta glitch flash */
+    --glitch-cyan: #00ffff;       /* Cyan overflow */
+    --glitch-red: #ff0040;        /* Red error */
+
+    /* === CRT EFFECTS === */
+    --crt-scanline: rgba(0, 0, 0, 0.25);
+    --crt-phosphor: rgba(0, 255, 157, 0.08);
+    --crt-vignette: radial-gradient(circle at center, transparent 60%, rgba(0,0,0,0.7) 100%);
+
+    /* === FONTS === */
+    --font-mono: 'Rajdhani', 'Orbitron', 'VT323', 'Fira Code', monospace;
+    --font-sans: 'Inter', sans-serif;
+    --font-script: 'Dancing Script', cursive;
+}
 * {
     margin: 0;
     padding: 0;
@@ -36,6 +56,7 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
 }
+
 
 /* --- UTILITIES --- */
 .highlight {
@@ -104,7 +125,7 @@ body {
     border-radius: 30px;
     overflow: hidden;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(100, 255, 218, 0.15);
+    border: 1px solid rgba(0, 255, 157, 0.2);
     margin-bottom: 30px;
 }
 
@@ -175,7 +196,21 @@ body {
     border-color: var(--accent);
     color: var(--accent);
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
+    box-shadow: 0 5px 15px rgba(0, 255, 157, 0.4);
+}
+.social-circle:hover,
+.nav-icon:hover,
+.drawer-link:hover,
+.project-links a:hover,
+.social-row a:hover {
+    color: var(--accent);
+    text-shadow: 0 0 8px var(--accent-glow);
+    filter: drop-shadow(0 0 4px var(--accent-glow));
+}
+
+.social-circle:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(0, 255, 157, 0.4);
 }
 
 /* =========================================
@@ -249,10 +284,9 @@ body {
 }
 
 .nav-icon.active {
-    background: #fff;
+    background: var(--accent);
     color: var(--bg-main);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(0, 255, 157, 0.6);
 }
 
 .nav-icon::before {
@@ -413,11 +447,24 @@ body {
 
 /* --- TERMINAL VISUAL --- */
 .tech-terminal {
-    background: #020c1b;
-    border-radius: 6px;
-    box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
-    border: 1px solid #233554;
+    background: #000;
+    border: 2px solid #1a1a1a;
+    box-shadow: 
+        0 0 20px rgba(0, 255, 157, 0.2),
+        inset 0 0 20px rgba(0, 0, 0, 0.8);
+    position: relative;
     overflow: hidden;
+}
+.tech-terminal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: 
+        linear-gradient(transparent 50%, rgba(0,255,157,0.03) 50%),
+        linear-gradient(90deg, rgba(255,0,0,0.02), rgba(0,255,157,0.02), rgba(0,0,255,0.02));
+    background-size: 100% 4px, 100% 100%;
+    pointer-events: none;
+    z-index: 1;
 }
 
 .terminal-header {
@@ -438,10 +485,15 @@ body {
 .green { background: #27c93f; }
 
 .terminal-body {
+    position: relative;
     padding: 25px;
+    z-index: 2;
+    color: var(--accent);
     font-family: var(--font-mono);
     font-size: 13px;
     line-height: 1.5;
+    text-shadow: 0 0 5px var(--accent);
+    font-weight: 600;
 }
 
 .prompt {
@@ -791,5 +843,49 @@ footer {
     left: 50%;
     right: 50%;
     transform: translateX(-50%);
+}
+}
+/* CRT SCANLINES – improved blend */
+#crt-scanlines {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    background: 
+        linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.4) 50%),
+        linear-gradient(90deg, 
+            rgba(255,0,0,0.08) 33%, 
+            rgba(0,255,157,0.08) 33%, 
+            rgba(0,255,157,0.08) 66%, 
+            rgba(0,0,255,0.08) 66%
+        );
+    background-size: 100% 4px, 4px 100%;
+    opacity: 0.85;  /* WAS 0.6 */
+    mix-blend-mode: overlay;
+    animation: crt-flicker 0.08s infinite linear;
+}
+
+/* Flicker animation */
+@keyframes crt-flicker {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 0.78; }
+}
+
+/* Mobile: thinner lines */
+@media (max-width: 768px) {
+    #crt-scanlines {
+        background-size: 100% 2px, 2px 100%;
+        animation-duration: 0.15s;
+    }
+/* CRT VIGNETTE – dark corners */
+#crt-vignette {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    background: radial-gradient(circle at center, transparent 50%, rgba(0,0,0,0.6) 100%);
+    opacity: 0.9;  /* WAS 0.7 */
 }
 }
