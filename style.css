@@ -20,9 +20,9 @@
     box-sizing: border-box;
 }
 
-html { 
-    scroll-behavior: smooth; /* Use native smooth scroll as a base */
-    overflow-x: hidden; 
+html {
+    scroll-behavior: auto !important;
+    overflow-x: hidden;
 }
 
 body {
@@ -703,14 +703,6 @@ footer {
 
     .project-card {
         padding: 25px 20px;
-    }
-    #matrix-bg {
-        /* We keep the canvas, but reduce its opacity even more on mobile */
-        opacity: 0.1;
-    }
-
-    .sidebar-nav { 
-        display: none !important; /* Force hide pill sidebar */
     }
 }
 
