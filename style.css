@@ -686,7 +686,7 @@ footer {
 /* --- Mobile (max-width: 768px) --- */
 @media (max-width: 768px) {
     .sidebar-nav {
-        display: none !important;
+        display: none;
     }
 
     .mobile-menu-toggle {
@@ -698,11 +698,13 @@ footer {
         min-height: 70vh;
     }
 
+    /* FULL BLEED CONTENT */
     .content-wrapper {
-    padding: 0 !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
-  }
+        padding: 0 !important;
+        width: 100vw !important;
+        max-width: none !important;
+        margin: 0 calc(-50vw + 50%) !important; /* Optional: true full-bleed */
+    }
 
     .signature-name {
         font-size: 50px;
@@ -730,14 +732,17 @@ footer {
     .skill-card,
     .project-card,
     .swiper {
-        box-shadow: none !important;
+        box-shadow: none;
     }
 
+    /* FULL WIDTH SWIPER */
     .swiper {
         width: 100vw !important;
-        max-width: 100vw !important;
+        max-width: none !important;
+        margin-left: calc(-50vw + 50%);
+        border-radius: 0;
     }
-    }
+}
 
 /* --- Small Phones (max-width: 480px) --- */
 @media (max-width: 480px) {
@@ -754,24 +759,36 @@ footer {
     }
 
     .content-wrapper {
-    padding: 0 !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
-  }
+        padding: 0 !important;
+        width: 100vw !important;
+        max-width: none !important;
+    }
 
     .profile-frame,
     .swiper,
     .project-card,
     .skill-card {
-        border-radius: 12px !important;
+        border-radius: 12px;
     }
 
     .about-grid,
     .skills-grid {
         gap: 15px;
     }
+
     .swiper {
         width: 100vw !important;
-        max-width: 100vw !important;
+        max-width: none !important;
+        margin-left: calc(-50vw + 50%);
+        border-radius: 0;
     }
+    .full-bleed {
+    width: 100vw;
+    max-width: none;
+    margin-left: calc(-50vw + 50%);
+    position: relative;
+    left: 50%;
+    right: 50%;
+    transform: translateX(-50%);
+}
 }
