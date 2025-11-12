@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     function closeMenu() {
         mobileDrawer.classList.remove('active');
-        drawerOverlay.classList.remove: 'active';
+        drawerOverlay.classList.remove( 'active');
         document.body.style.overflow = ''; // Restore scrolling
     }
 
