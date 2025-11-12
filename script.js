@@ -96,21 +96,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // 5. SWIPER CAROUSEL
-    const swiper = new Swiper(".mySwiper", {
-        slidesPerView: 1,
-        spaceBetween: 30,
-        loop: true,
-        grabCursor: true,
-        autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-        },
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
-        speed: 800,
-    });
+const swiper = new Swiper(".mySwiper", {
+    slidesPerView: 1,
+    spaceBetween: 30,
+    loop: true,
+    grabCursor: true,
+    autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+    },
+    pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+    },
+    speed: 800,
+    // This part is new:
+    // This tells Swiper to re-calculate its size
+    // whenever the window is resized.
+    observer: true,
+    observeParents: true,
+});
 
     // 6. SCROLL REVEALS
     gsap.utils.toArray(".gsap-reveal").forEach(element => {
