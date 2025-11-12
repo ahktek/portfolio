@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // =========================================
     // 1. CORE SETUP (Lenis Smooth Scroll + GSAP)
-    // =========================================
     gsap.registerPlugin(ScrollTrigger);
     const lenis = new Lenis({
         duration: 1.2,
@@ -16,15 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     requestAnimationFrame(raf);
 
-    // =========================================
     // 2. MOBILE DRAWER LOGIC
-    // =========================================
     const menuToggle = document.querySelector('.mobile-menu-toggle');
     const mobileDrawer = document.querySelector('.mobile-drawer');
     const drawerOverlay = document.querySelector('.drawer-overlay');
     const drawerClose = document.querySelector('.drawer-close');
     const drawerLinks = document.querySelectorAll('.drawer-link');
-
     function openMenu() {
         mobileDrawer.classList.add('active');
         drawerOverlay.classList.add('active');
@@ -36,25 +31,21 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.style.overflow = '';
     }
     if (menuToggle) {
-        menuToggle.addEventListener('click', openMenu);
-        drawerClose.addEventListener('click', closeMenu);
-        drawerOverlay.addEventListener('click', closeMenu);
-        drawerLinks.forEach(link => link.addEventListener('click', closeMenu));
+        menuToggle.addEventListener('click', openMenu, { passive: true });
+        drawerClose.addEventListener('click', closeMenu, { passive: true });
+        drawerOverlay.addEventListener('click', closeMenu, { passive: true });
+        drawerLinks.forEach(link => link.addEventListener('click', closeMenu, { passive: true }));
     }
 
-    // =========================================
     // 3. NAVIGATION (Smooth Scroll & Spy)
-    // =========================================
-    // A. Smooth Scroll on Click (Desktop & Mobile)
     document.querySelectorAll('.nav-icon, .drawer-link').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
             lenis.scrollTo(targetId, { duration: 1.5, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
-        });
+        }, { passive: false });
     });
 
-    // B. ScrollSpy (Active State for Sidebar)
     const sections = document.querySelectorAll("section[id]");
     sections.forEach(section => {
         ScrollTrigger.create({
@@ -69,11 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // =========================================
-    // 4. HERO ANIMATIONS (Tactical Zig-Zag)
-    // =========================================
-    
-    // A. Profile Picture (The Anchor - Pops first)
+    // 4. HERO ANIMATIONS
     gsap.from(".animate-pop", {
         duration: 1.5,
         scale: 0.8,
@@ -82,61 +69,50 @@ document.addEventListener("DOMContentLoaded", () => {
         delay: 0.3
     });
 
-    // B. Signature (Attacks from the LEFT)
     const signature = document.querySelector(".signature-name");
     if (signature) {
-        // Split text into letters for that premium feel
-        signature.innerHTML = signature.textContent.split("").map(char => 
+        signature.innerHTML = signature.textContent.split("").map(char =>
             char === " " ? "&nbsp;" : `<span>${char}</span>`
         ).join("");
-        
+
         gsap.from(".signature-name span", {
             duration: 1.2,
-            x: -50,         // <--- Starts 50px to the LEFT
+            x: -50,
             opacity: 0,
-            stagger: 0.03,  // Fast ripple effect
+            stagger: 0.03,
             ease: "power4.out",
-            delay: 0.6      // Waits for profile to land
+            delay: 0.6
         });
     }
 
-    // C. Role Part 1 (Attacks from the RIGHT)
     gsap.from(".hero-role-1", {
         duration: 1.2, x: 50, opacity: 0, ease: "power4.out", delay: 1.0
     });
-
-    // D. Role Part 2 (Attacks from the LEFT)
     gsap.from(".hero-role-2", {
         duration: 1.2, x: -50, opacity: 0, ease: "power4.out", delay: 1.2
     });
-
-    // E. Social Bar (Attacks from the RIGHT again - Zig-Zag complete)
     gsap.from(".hero-social-bar", {
         duration: 1.2, x: 50, opacity: 0, ease: "power4.out", delay: 1.4
     });
 
-    // =========================================
-    // NEW: SELECTED WORK CAROUSEL (Swiper)
-    // =========================================
+    // 5. SWIPER CAROUSEL
     const swiper = new Swiper(".mySwiper", {
         slidesPerView: 1,
         spaceBetween: 30,
-        loop: true,           // Infinite loop
-        grabCursor: true,     // Shows a hand cursor to indicate draggable
+        loop: true,
+        grabCursor: true,
         autoplay: {
-            delay: 3000,      // 3 seconds per slide
-            disableOnInteraction: false, // Keeps auto-playing even after user swipes
+            delay: 3000,
+            disableOnInteraction: false,
         },
         pagination: {
             el: ".swiper-pagination",
             clickable: true,
         },
-        speed: 800, // Smooth slide transition speed (in ms)
+        speed: 800,
     });
 
-    // =========================================
-    // 5. SCROLL REVEALS (Rest of page)
-    // =========================================
+    // 6. SCROLL REVEALS
     gsap.utils.toArray(".gsap-reveal").forEach(element => {
         gsap.from(element, {
             scrollTrigger: { trigger: element, start: "top 85%", toggleActions: "play none none none" },
@@ -144,52 +120,71 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // =========================================
-    // 6. MATRIX RAIN BACKGROUND
-    // =========================================
+    // 7. MATRIX RAIN BACKGROUND - FINAL MOBILE OPTIMIZED VERSION
     const canvas = document.getElementById('matrix-bg');
-if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let dpr = window.devicePixelRatio || 1;
-    function resizeCanvas() {
-        // Lower resolution on mobile to improve performance
-        if (window.innerWidth < 600) dpr = 0.7; // scale down for mobile
-        else dpr = 1;
-        canvas.width = window.innerWidth * dpr;
-        canvas.height = window.innerHeight * dpr;
-        ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset any transforms
-        ctx.scale(dpr, dpr);
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-    const chars = '01';
-    const fontSize = window.innerWidth < 600 ? 11 : 14; // use smaller font on mobile
-    let columns = Math.floor(window.innerWidth / fontSize);
-    let drops = [];
-    function initDrops() {
-        columns = Math.floor(window.innerWidth / fontSize);
-        drops = [];
-        for (let i = 0; i < columns; i++) { drops[i] = 1; }
-    }
-    initDrops();
-    window.addEventListener('resize', () => {
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let dpr = window.devicePixelRatio || 1;
+
+        // Utility to detect mobile
+        const isMobile = () => window.innerWidth < 600;
+
+        // Reduce redraw rate on mobile
+        let lastTime = 0;
+        let frameInterval = isMobile() ? 1000 / 25 : 1000 / 45; // FPS throttle
+
+        function resizeCanvas() {
+            if (isMobile()) {
+                dpr = 0.7; // Downscale resolution on mobile
+            } else {
+                dpr = 1;
+            }
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.scale(dpr, dpr);
+        }
         resizeCanvas();
+
+        const chars = '01';
+        const fontSize = isMobile() ? 9 : 14; // Even smaller font on mobile for fewer columns
+        let columns;
+        let drops = [];
+
+        function initDrops() {
+            columns = Math.floor(window.innerWidth / fontSize);
+            drops = Array.from({ length: columns }, () => 1);
+        }
         initDrops();
-    });
-    function drawMatrix() {
-        ctx.fillStyle = 'rgba(10, 25, 47, 0.15)';
-        ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
-        ctx.fillStyle = '#64ffda';
-        ctx.font = `${fontSize}px 'Fira Code', monospace`;
-        for (let i = 0; i < drops.length; i++) {
-            const text = chars.charAt(Math.floor(Math.random() * chars.length));
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-            if (drops[i] * fontSize > canvas.height / dpr && Math.random() > 0.975) drops[i] = 0;
-            drops[i]++;
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initDrops();
+            frameInterval = isMobile() ? 1000 / 25 : 1000 / 45;
+        });
+
+        function drawMatrix(now) {
+            // Throttle frame rate manually for mobile
+            if (now - lastTime < frameInterval) {
+                window.requestAnimationFrame(drawMatrix);
+                return;
+            }
+            lastTime = now;
+
+            ctx.fillStyle = 'rgba(10, 25, 47, 0.19)'; // Slightly more fade for less ghosting
+            ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+            ctx.fillStyle = '#64ffda';
+            ctx.font = `${fontSize}px 'Fira Code', monospace`;
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars.charAt(Math.floor(Math.random() * chars.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height / dpr && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+            window.requestAnimationFrame(drawMatrix);
         }
         window.requestAnimationFrame(drawMatrix);
     }
-    window.requestAnimationFrame(drawMatrix);
-}
 
 });
