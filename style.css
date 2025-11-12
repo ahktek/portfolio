@@ -670,16 +670,6 @@ footer {
    MOBILE TACTICS (RESPONSIVE DESIGN)
    ========================================= */
 
-/* --- Tablet & Smaller Laptops (max-width: 1080px) --- */
-@media (max-width: 1080px) {
-  .content-wrapper {
-    padding: 0 50px;
-  }
-  .about-grid {
-    gap: 30px;
-  }
-}
-
 /* --- Standard Mobile & Tablets (max-width: 900px) --- */
 @media (max-width: 900px) {
   .swiper {
@@ -739,7 +729,7 @@ footer {
   .swiper {
     width: 100%;
     height: auto;
-    aspect-ratio: 5 / 3; /* Maintains 1000x600 image ratio */
+    aspect-ratio: 5 / 3; /* This is the key */
     border-radius: 12px;
     max-width: 100%;
     background: var(--bg-card, #112240);
@@ -750,7 +740,7 @@ footer {
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 5 / 3; /* Ensures images keep the right proportions */
+    aspect-ratio: 5 / 3; /* This is also the key */
     object-fit: cover;
     border-radius: 12px;
   }
