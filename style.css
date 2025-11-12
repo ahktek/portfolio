@@ -1,8 +1,9 @@
 /* =========================================
     GLOBAL THEME & RESET
     ========================================= */
-/* 2. Unify font imports (example: add Inter with Fira Code & Dancing Script) */
+/* Unified font import */
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Inter:wght@400;700&family=Fira+Code:wght@400;700&display=swap');
+
 :root {
     --bg-main: #0a192f;
     --bg-card: #112240;
@@ -26,13 +27,13 @@ html {
 }
 
 body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--bg-main);
-  color: var(--text-primary);
-  font-family: var(--font-sans);
-  line-height: 1.6;
-  overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    overflow-x: hidden;
 }
 
 /* --- UTILITIES --- */
@@ -79,7 +80,6 @@ body {
 /* =========================================
     HERO SECTION
     ========================================= */
-/* === NEW CENTERED HERO (STEP 1) === */
 .hero-section {
     min-height: 100vh;
     display: flex;
@@ -96,26 +96,24 @@ body {
     width: 100%;
 }
 
-/* The "Jayden" Style Frame */
 .profile-frame {
     width: 100%;
-    max-width: 380px;      /* Limits width on large screens */
-    height: 450px;         /* Tall rectangle aspect ratio */
-    border-radius: 30px;   /* The specific rounded corners from your reference */
-    overflow: hidden;      /* Keeps the image inside the rounded corners */
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); /* Deep, premium shadow */
-    border: 1px solid rgba(100, 255, 218, 0.15); /* Subtle cyber-cyan border */
+    max-width: 380px;
+    height: 450px;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(100, 255, 218, 0.15);
     margin-bottom: 30px;
 }
 
 .profile-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;     /* CRITICAL: Prevents image stretching */
-    object-position: center top; /* Focuses on face usually */
+    object-fit: cover;
+    object-position: center top;
 }
 
-/* Signature Name (Jayden Style - Slim & Tilted) */
 .signature-name {
     font-family: 'Dancing Script', cursive;
     font-size: clamp(30px, 6vw, 100px);
@@ -125,60 +123,58 @@ body {
     z-index: 10;
     text-shadow: 0 5px 20px rgba(0,0,0,0.8);
     line-height: 1;
-    transform: rotate(-7deg); /* <--- The tilt. Adjust standard degrees if needed (-5deg to -10deg is usually best) */
-}
-/* Necessary for the letter-by-letter animation to work */
-.signature-name span {
-    display: inline-block; /* Allows each letter to move independently */
+    transform: rotate(-7deg);
 }
 
-/* --- New Split Role Styles --- */
+.signature-name span {
+    display: inline-block;
+}
+
 .hero-role-container {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
-    gap: 8px; /* Space between the two lines */
+    gap: 8px;
 }
 .hero-role-1 {
     font-family: var(--font-sans);
-    color: #e6f1ff; /* White/Bright for the name intro */
+    color: #e6f1ff;
     font-size: 18px;
     font-weight: 600;
 }
 .hero-role-2 {
     font-family: var(--font-mono);
-    color: var(--accent); /* Cyber cyan for the technical details */
+    color: var(--accent);
     font-size: 14px;
-    max-width: 600px; /* Prevents it from getting too wide on large screens */
+    max-width: 600px;
     line-height: 1.4;
 }
 
-    /* === HERO SOCIAL BAR (Jayden Style) === */
 .hero-social-bar {
     display: flex;
     justify-content: center;
-    gap: 15px;            /* Space between circles */
-    margin-top: 30px;       /* Space from the text above */
+    gap: 15px;
+    margin-top: 30px;
 }
 
 .social-circle {
     width: 40px;
     height: 40px;
-    border-radius: 50%;     /* Perfect circle */
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-secondary); /* Muted default color */
+    color: var(--text-secondary);
     transition: all 0.3s ease;
-    background: rgba(0,0,0,0.2);  /* Slight dark background */
+    background: rgba(0,0,0,0.2);
 }
 
 .social-circle:hover {
-    border-color: var(--accent);  /* Cyan border on hover */
-    color: var(--accent);         /* Cyan icon on hover */
-    transform: translateY(-3px);  /* Slight lift effect */
-    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2); /* Cyber glow */
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
 }
 
 /* =========================================
@@ -286,8 +282,8 @@ body {
 }
 .nav-icon,
 .social-circle {
-  touch-action: manipulation;
-  transition: all 0.18s cubic-bezier(0.44, 0.13, 0.48, 0.87);
+    touch-action: manipulation;
+    transition: all 0.18s cubic-bezier(0.44, 0.13, 0.48, 0.87);
 }
 
 
@@ -509,8 +505,8 @@ body {
     /* === SELECTED WORK CAROUSEL === */
 .swiper {
     width: 100%;
-    height: 500px; /* Adjust height as needed */
-    border-radius: 10px; /* Matches your other rounded corners */
+    height: 500px; /* Desktop height */
+    border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 20px 40px rgba(0,0,0,0.4);
 }
@@ -518,7 +514,7 @@ body {
 .swiper-slide img {
     display: block;
     width: 100%;
-    height: 100%;
+    height: 100%; /* Desktop: Fill 500px container */
     object-fit: cover;
     border-radius: 10px;
 }
@@ -529,7 +525,7 @@ body {
     opacity: 0.5;
 }
 .swiper-pagination-bullet-active {
-    background: var(--accent); /* Cyan active dot */
+    background: var(--accent);
     opacity: 1;
 }
 
@@ -679,85 +675,91 @@ footer {
 
 /* --- Standard Mobile & Tablets (max-width: 768px) --- */
 @media (max-width: 768px) {
-  .sidebar-nav {
-    display: none !important;
-  }
+    .sidebar-nav {
+        display: none !important;
+    }
 
-  .mobile-menu-toggle {
-    display: flex;
-  }
+    .mobile-menu-toggle {
+        display: flex;
+    }
 
-  .section-pad {
-    padding: clamp(50px, 10vw, 100px) 0;
-    min-height: 70vh;
-  }
+    .section-pad {
+        padding: clamp(50px, 10vw, 100px) 0;
+        min-height: 70vh;
+    }
 
-  .content-wrapper {
-    padding: 0 25px;
-  }
+    .content-wrapper {
+        padding: 0 25px;
+    }
 
-  .signature-name {
-    font-size: 50px;
-  }
+    .signature-name {
+        font-size: 50px;
+    }
 
-  .about-grid,
-  .skills-grid {
-    grid-template-columns: 1fr;
-  }
+    .about-grid,
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
 
-  .section-heading::after {
-    width: 100%;
-  }
+    .section-heading::after {
+        width: 100%;
+    }
 
-  .project-card {
-    padding: 25px 20px;
-  }
+    .project-card {
+        padding: 25px 20px;
+    }
 
-  #matrix-bg {
-    filter: blur(0.5px);
-    opacity: 0.09;
-  }
+    #matrix-bg {
+        filter: blur(0.5px);
+        opacity: 0.09;
+    }
 
-  .profile-frame,
-  .skill-card,
-  .project-card,
-  .swiper {
-    box-shadow: none !important;
-  }
+    .profile-frame,
+    .skill-card,
+    .project-card,
+    .swiper {
+        box-shadow: none !important;
+    }
 
-  .swiper {
-    height: auto;
-    aspect-ratio: 10 / 6; /* Maintains your 1000x600 image ratio */
-  }
+    /* === START: MOBILE SWIPER FIX === */
+    .swiper {
+        height: auto; /* Remove fixed desktop height */
+    }
+    
+    .swiper-slide img {
+        height: auto; /* Override desktop 'height: 100%' */
+        aspect-ratio: 10 / 6; /* Apply 1000x600 ratio to the image itself */
+    }
+    /* === END: MOBILE SWIPER FIX === */
 }
 
 /* --- Small Phones (max-width: 480px) --- */
 @media (max-width: 480px) {
-  .signature-name {
-    font-size: 40px;
-  }
+    .signature-name {
+        font-size: 40px;
+    }
 
-  .section-heading::after {
-    width: min(100%, 200px);
-  }
+    .section-heading::after {
+        width: min(100%, 200px);
+    }
 
-  .big-title {
-    font-size: 45px;
-  }
+    .big-title {
+        font-size: 45px;
+    }
 
-  .content-wrapper {
-    padding: 0 10px;
-  }
+    .content-wrapper {
+        padding: 0 10px;
+    }
 
-  .profile-frame,
-  .swiper,
-  .project-card,
-  .skill-card {
-    border-radius: 12px !important;
-  }
+    .profile-frame,
+    .swiper,
+    .project-card,
+    .skill-card {
+        border-radius: 12px !important;
+    }
 
-  .about-grid,
-  .skills-grid {
-    gap: 15px;
-  }
+    .about-grid,
+    .skills-grid {
+        gap: 15px;
+    }
 }
