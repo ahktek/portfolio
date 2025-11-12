@@ -95,26 +95,73 @@ document.addEventListener("DOMContentLoaded", () => {
         duration: 1.2, x: 50, opacity: 0, ease: "power4.out", delay: 1.4
     });
 
-    // 5. SWIPER CAROUSEL
-const swiper = new Swiper(".mySwiper", {
-    slidesPerView: 1,
-    spaceBetween: 30,
-    loop: true,
-    grabCursor: true,
-    autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
-    },
-    pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-    },
-    speed: 800,
-    // This part is new:
-    // This tells Swiper to re-calculate its size
-    // whenever the window is resized.
-    observer: true,
-    observeParents: true,
+    // 5. SWIPER CAROUSEL - FULLY RESPONSIVE & MOBILE OPTIMIZED
+let swiperInstance = null;
+
+function initSwiper() {
+    // Destroy existing instance if exists
+    if (swiperInstance) {
+        swiperInstance.destroy(true, true);
+    }
+
+    const isMobile = window.innerWidth <= 768;
+    const isSmall = window.innerWidth <= 480;
+
+    swiperInstance = new Swiper(".mySwiper", {
+        // Responsive slides
+        slidesPerView: 1,
+        spaceBetween: 20,
+        loop: true,
+        grabCursor: true,
+        centeredSlides: true,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+            dynamicBullets: true,
+        },
+        speed: 800,
+        effect: 'coverflow',
+        coverflowEffect: {
+            rotate: 0,
+            stretch: 0,
+            depth: 100,
+            modifier: 2.5,
+            slideShadows: false,
+        },
+        // Critical: Re-init on resize
+        observer: true,
+        observeParents: true,
+        // Breakpoints for dynamic behavior
+        breakpoints: {
+            320: {
+                slidesPerView: 1,
+                spaceBetween: 10,
+            },
+            480: {
+                slidesPerView: 1,
+                spaceBetween: 15,
+            },
+            768: {
+                slidesPerView: 1,
+                spaceBetween: 20,
+            }
+        }
+    });
+}
+
+// Initialize on load
+initSwiper();
+
+// Re-init on window resize (with debounce)
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(initSwiper, 200);
 });
 
     // 6. SCROLL REVEALS
