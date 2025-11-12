@@ -724,6 +724,10 @@ footer {
   .swiper {
     box-shadow: none !important;
   }
+  .swiper {
+    height: auto;
+    aspect-ratio: 10 / 6; /* Maintains your 1000x600 image ratio */
+}
 }
 
 /* --- Small Phones (max-width: 480px) --- */
